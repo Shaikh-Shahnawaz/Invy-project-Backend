@@ -1,10 +1,13 @@
 const express = require("express")
-const { showHome, signupUser } = require("../controllers/authenticationController")
+const {signupUser, showUser, loginUser } = require("../controllers/authenticationController")
+const { hashPassword } = require("../middlewares/passwordbcrypt")
 
 const router = express.Router()
 
-// router.get('/',showHome)
+router.get('/users',showUser)
 
-router.post("/signup",signupUser)
+router.post("/signup",hashPassword,signupUser)
+
+router.post("/login",loginUser)
 
 module.exports = router

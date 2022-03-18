@@ -12,7 +12,7 @@ const app = express()
 const PORT = process.env.PORT 
 const HOST = process.env.HOST
 
-require('./models')
+// require('./models')
 
 
 // middleware
