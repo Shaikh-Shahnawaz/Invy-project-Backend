@@ -43,11 +43,11 @@ exports.loginUser = async (req, res, next) => {
     }else{
        data = await Users.findOne({ where: { email: req.body.email } });
     }
-    if (!data) throw new Error("Username not found");
+    if (!data) res.json({error:"Username not found"})
 
     // we have to run some checks that password matches or not
     const authenticated = await bcrypt.compare(req.body.password, data.password);
-    if (!authenticated) throw new Error("Incorrect Password");
+    if (!authenticated) res.json({error:"Incorrect Password"})
     
 
     // we have to return jwt
@@ -55,9 +55,10 @@ exports.loginUser = async (req, res, next) => {
     const token = createJwt(JSON.parse(JSON.stringify(data)));
     res.json({ message: "Login SuccessFully !!", token: token });
 
-    
+
   } catch (error) {
     // agr error aati hai to yeh next error middleware m bhej dega
-    throw new Error(error);
+    // throw new Error(error);
+    next(error);
   }
 };

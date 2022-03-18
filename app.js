@@ -1,6 +1,8 @@
 const express = require('express')
 require("dotenv").config();
 const cors = require("cors");
+const router = require('./routes/authenticationRoutes');
+const { centralErrorHandler } = require('./controllers/errorController');
 const app = express()
 
 // let corsOptions = {
@@ -23,7 +25,6 @@ app.use(express.urlencoded({ extended: false }));
 
 
 // routes middleware
-const router = require('./routes/authenticationRoutes')
 app.use("/api/authentication", router);
 
 
@@ -39,7 +40,7 @@ app.use((req, res, next) => {
 });
 
 // // central error handler middleware
-// app.use(centralErrorHandler);
+app.use(centralErrorHandler);
 
 
 module.exports = app;
